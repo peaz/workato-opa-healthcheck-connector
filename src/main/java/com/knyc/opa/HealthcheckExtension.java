@@ -4,15 +4,15 @@
 
 package com.knyc.opa;
 
-import org.apache.commons.codec.binary.Hex;
-import org.springframework.core.env.Environment;
+// import org.apache.commons.codec.binary.Hex;
+// import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.inject.Inject;
+// import javax.inject.Inject;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,8 +27,8 @@ import java.lang.Thread.State;
 @Controller
 public class HealthcheckExtension {
 
-    @Inject
-    private Environment env;
+    // @Inject
+    // private Environment env;
 
     @RequestMapping(path = "/ping", method = RequestMethod.GET)
     public @ResponseBody Map<String, Object> ping() throws Exception {
@@ -42,9 +42,9 @@ public class HealthcheckExtension {
     public @ResponseBody Map<String, Object> getMemory() throws Exception {
         Map<String, Object> responseData = new HashMap<String, Object>();
         int mb = 1024*1024;
-
-		//Getting the runtime reference from system
-		Runtime runtime = Runtime.getRuntime();
+        
+        //Getting the runtime reference from system
+        Runtime runtime = Runtime.getRuntime();
         Long usedMemory = (runtime.totalMemory() - runtime.freeMemory()) / mb;
         Long freeMemory = runtime.freeMemory() / mb;
         Long totalMemory = runtime.totalMemory() / mb;
