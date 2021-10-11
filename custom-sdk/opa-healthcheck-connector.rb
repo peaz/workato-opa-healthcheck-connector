@@ -28,13 +28,25 @@
     
     getMemory: {
       title: 'Get OPA JVM Memory Info',
-      description: 'Get the JVM memory details (in mb) where OPA is running',
+      description: 'Get the JVM memory usage (in mb) where OPA is running',
       output_fields:lambda do |object_definitions|
         object_definitions['memoryInfo']
       end,
 
       execute: lambda do |connection|
         get("http://localhost/ext/#{connection['profile']}/memory").headers('X-Workato-Connector': 'enforce')
+      end
+    },
+    
+    getCPUs: {
+      title: 'Get OPA server\'s CPU Info',
+      description: 'Get the CPU details where OPA is running. Note: For the JVM and System CPU load, a value of 0 means that all CPUs were idle during the recent period of time observed',
+      output_fields:lambda do |object_definitions|
+        object_definitions['cpus']
+      end,
+
+      execute: lambda do |connection|
+        get("http://localhost/ext/#{connection['profile']}/cpus").headers('X-Workato-Connector': 'enforce')
       end
     },
     
@@ -75,6 +87,35 @@
         ]
       end,
     },
+    
+    cpus:{
+      fields: lambda do
+        [
+          {
+            "control_type": "number",
+            "label": "CPUs",
+            "parse_output": "integer_conversion",
+            "type": "number",
+            "name": "cpus"
+          },
+          {
+            "control_type": "number",
+            "label": "JVM CPU Load",
+            "parse_output": "float_conversion",
+            "type": "number",
+            "name": "jvmCPULoad"
+          },
+          {
+            "control_type": "number",
+            "label": "System CPU Load",
+            "parse_output": "float_conversion",
+            "type": "number",
+            "name": "systemCPULoad"
+          }
+        ]
+      end,
+    },
+    
     
     memoryInfo:{
       fields: lambda do
